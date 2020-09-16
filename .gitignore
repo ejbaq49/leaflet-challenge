@@ -4,6 +4,9 @@
 # Log file
 *.log
 
+# config file (API key)
+config.js
+
 # BlueJ files
 *.ctxt
 
