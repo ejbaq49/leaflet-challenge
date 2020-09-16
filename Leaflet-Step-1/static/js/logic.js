@@ -1,4 +1,4 @@
-// Creating map object
+// Creating map object centered on Las Vegas :)
 var myMap = L.map("map", {
   center: [36, -115],
   zoom: 6,
