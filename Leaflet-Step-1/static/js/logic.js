@@ -29,6 +29,27 @@ var myMap = L.map("map", {
 
 // get earthquake GeoJSON data
 d3.json(queryUrl, function (quake_data) {
-  // add to map
-  L.geoJson(quake_data).addTo(myMap);
+  // add to map to test marker location
+  // L.geoJson(quake_data).addTo(myMap);
+
+  // how much data?
+  var quakes = quake_data.features.length;
+  console.log(`Feature count: ${quakes}`);
+
+  // loop through and build circles
+  for (i = 0; i < quake_data.features.length; i++) {
+    var coords = quake_data.features[i].geometry.coordinates;
+    console.log(`lat-long = ${coords[1]}, ${coords[0]}`);
+    console.log(quake_data.features[i].properties.mag * 5000);
+
+    // create circles
+    L.circle([coords[1], coords[0]], {
+      fillOpacity: 0.75,
+      color: "blue",
+      fillColor: "pink",
+      radius: quake_data.features[i].properties.mag * 50000,
+    })
+      .bindPopup("<h1>FOO</h1>")
+      .addTo(myMap);
+  }
 });
