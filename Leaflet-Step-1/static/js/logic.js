@@ -28,6 +28,7 @@ var myMap = L.map("map", {
 });
 
 // function to return color
+// https://www.w3schools.com/colors/colors_wheels.asp
 function getColor(magnitude) {
   if (magnitude > 5) {
     return "#FE2712";
@@ -73,4 +74,8 @@ d3.json(queryUrl, function (quake_data) {
       )
       .addTo(myMap);
   }
+
+  // Set Up Legend
+  // https://gis.stackexchange.com/questions/133630/adding-leaflet-legend
+  var legend = L.control({ position: "bottomright" });
 });
