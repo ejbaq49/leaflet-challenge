@@ -64,8 +64,8 @@ d3.json(queryUrl, function (quake_data) {
 
     // create circles
     L.circle([coords[1], coords[0]], {
-      fillOpacity: 0.75,
-      color: "white",
+      fillOpacity: 0.5,
+      color: getColor(quake_data.features[i].properties.mag),
       fillColor: getColor(quake_data.features[i].properties.mag),
       radius: quake_data.features[i].properties.mag * 25000,
     })
@@ -77,5 +77,26 @@ d3.json(queryUrl, function (quake_data) {
 
   // Set Up Legend
   // https://gis.stackexchange.com/questions/133630/adding-leaflet-legend
-  var legend = L.control({ position: "bottomright" });
+  var legend = L.control({ position: "bottomleft" });
+
+  legend.onAdd = function () {
+    var div = L.DomUtil.create("div", "legend");
+    var labels = ["<strong>Magnitude</strong>"],
+      categories = ["0-1", "1-2", "2-3", "3-4", "4-5", "5+"];
+    colors = ["#B2D732", "#FEFE33", "#FCCC1A", "#FB9902", "#FC600A", "#FE2712"];
+
+    for (var i = 0; i < colors.length; i++) {
+      div.innerHTML += labels.push(
+        '<i style="background: ' +
+          getColor(i + 0.5) +
+          '"></i>' +
+          (categories[i] ? categories[i] : "+")
+      );
+    }
+    div.innerHTML = labels.join("<br>");
+    console.log(div.innerHTML);
+    return div;
+  };
+
+  legend.addTo(myMap);
 });
